@@ -21,7 +21,6 @@ let _proxyPrefix = null;
 const c2_sysx_setConfig = ({clientId, proxyPrefix}) => {
     _clientId = clientId;
     _proxyPrefix = proxyPrefix;
-    console.log('配置完成');
 };
 
 /**

@@ -13,14 +13,15 @@ const request = ({url, method = 'get', data, responseType}) => {
         }).then(response => {
             if (response.type === 'opaqueredirect') {
                 // 发生了重定向被拦截
-                return reject('登录状态已失效，请重新登录');
+                throw '登录状态已失效，请重新登录';
+            } else {
+                if (responseType === 'blob') {
+                    return response.blob();
+                }
+                return response.json();
             }
-            if (responseType === 'blob') {
-                return response.blob();
-            }
-            return response.json();
         }).then(response => {
-            responseStatusHandler(response, resolve, reject);
+            responseStatusHandler(url, response, resolve, reject);
         }).catch(error => {
             reject(error);
         });
@@ -28,11 +29,11 @@ const request = ({url, method = 'get', data, responseType}) => {
 };
 
 // 处理响应数据
-const responseStatusHandler = (response, resolve, reject) => {
-    if (response) {
+const responseStatusHandler = (url, response, resolve, reject) => {
+    if (response || typeof response === 'boolean') {
         let {errorCode, errorMessage} = response;
         if (errorCode === '410001' || errorCode === 'unkown exception') {
-            return reject(new Error(errorMessage || 'Error'));
+            return reject(new Error(`${errorMessage}` || 'Error'));
         }
         return resolve(response);
     }
