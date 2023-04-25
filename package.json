@@ -1,6 +1,6 @@
 {
   "name": "c2-sysx-api",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "系统管理X接口",
   "main": "index.js",
   "author": "vic",

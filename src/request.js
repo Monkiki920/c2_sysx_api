@@ -18,7 +18,11 @@ const request = ({url, method = 'get', data, responseType}) => {
                 if (responseType === 'blob') {
                     return response.blob();
                 }
-                return response.json();
+                try {
+                    return response.json();
+                } catch (error) {
+                    reject('系统异常');
+                }
             }
         }).then(response => {
             responseStatusHandler(url, response, resolve, reject);

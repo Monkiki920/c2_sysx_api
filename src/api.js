@@ -7,7 +7,8 @@ import {
     _logoutApi,
     _menusApi, _modifyPasswordApi, _modifyPasswordForceStatusApi,
     _permissionsApi,
-    _userInformationApi
+    _userInformationApi,
+    _userRolesApi
 } from './url';
 
 let _clientId = null;
@@ -15,8 +16,9 @@ let _proxyPrefix = null;
 
 /**
  * 设置配置信息
- * @param clientId 客户端id
- * @param proxyPrefix 代理前缀
+ * @param option
+ * @param option.clientId 客户端id
+ * @param option.proxyPrefix 代理前缀
  */
 const c2_sysx_setConfig = ({clientId, proxyPrefix}) => {
     _clientId = clientId;
@@ -25,7 +27,8 @@ const c2_sysx_setConfig = ({clientId, proxyPrefix}) => {
 
 /**
  * 判断是否需要验证码登录
- * @param account 账号
+ * @param option
+ * @param option.account 账号
  */
 const c2_sysx_getCaptchaCheckStatus = ({account = ''} = {}) => {
     return request({
@@ -39,7 +42,8 @@ const c2_sysx_getCaptchaCheckStatus = ({account = ''} = {}) => {
 
 /**
  * 获取图形验证码
- * @param random 随机数
+ * @param option
+ * @param option.random 随机数
  */
 const c2_sysx_getCaptchaImageResources = ({random}) => {
     return request({
@@ -53,10 +57,11 @@ const c2_sysx_getCaptchaImageResources = ({random}) => {
 
 /**
  * 账号登录
- * @param account 账号
- * @param password 密码
- * @param captchaText 验证码
- * @param captchaKey 验证码标识
+ * @param option
+ * @param option.account 账号
+ * @param option.password 密码
+ * @param option.captchaText 验证码
+ * @param option.captchaKey 验证码标识
  */
 const c2_sysx_login = ({account, password, captchaText = '', captchaKey} = {}) => {
     let clientId = _clientId || '0';
@@ -93,8 +98,9 @@ const c2_sysx_modifyPasswordForceStatus = _ => {
 
 /**
  * 修改密码
- * @param password 新密码
- * @param confirmPwd 确认密码
+ * @param option
+ * @param option.password 新密码
+ * @param option.confirmPwd 确认密码
  */
 const c2_sysx_modifyPassword = ({password, confirmPwd}) => {
     return request({
@@ -118,6 +124,8 @@ const c2_sysx_logout = _ => {
 
 /**
  * 获取用户头像
+ * @param option
+ * @param option.id 用户id
  */
 const c2_sysx_getAvatar = ({id = ''}) => {
     return request({
@@ -143,6 +151,15 @@ const c2_sysx_getPermissions = _ => {
     });
 };
 
+/**
+ * 获取用户的角色
+ */
+const c2_sysx_getUserRoles = id => {
+    return request({
+        url: _proxyPrefix + _userRolesApi(id)
+    });
+};
+
 export {
     c2_sysx_setConfig,
     c2_sysx_getCaptchaCheckStatus,
@@ -154,5 +171,6 @@ export {
     c2_sysx_logout,
     c2_sysx_getAvatar,
     c2_sysx_getMenus,
-    c2_sysx_getPermissions
+    c2_sysx_getPermissions,
+    c2_sysx_getUserRoles
 };

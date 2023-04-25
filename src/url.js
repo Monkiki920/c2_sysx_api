@@ -8,6 +8,7 @@ const _menusApi = '/sysx/v1/menus';
 const _permissionsApi = '/sysx/v1/permissions';
 const _modifyPasswordForceStatusApi = '/sso/v1/oauth2securitypolicy/securitypolicy';
 const _modifyPasswordApi = '/ws/updatePwd';
+const _userRolesApi = id => `/sysx/v1/person/${id}`;
 
 export {
   _captchaCheckStatusApi,
@@ -20,4 +21,5 @@ export {
   _permissionsApi,
   _modifyPasswordForceStatusApi,
   _modifyPasswordApi,
+  _userRolesApi
 };
