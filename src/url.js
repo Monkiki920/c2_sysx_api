@@ -9,6 +9,7 @@ const _permissionsApi = '/sysx/v1/permissions';
 const _modifyPasswordForceStatusApi = '/sso/v1/oauth2securitypolicy/securitypolicy';
 const _modifyPasswordApi = '/ws/updatePwd';
 const _userRolesApi = id => `/sysx/v1/person/${id}`;
+const _userMechanismApi = (id, mechanism) => `/sysx/v1/users/${id}/orgs?categoryId=${mechanism}`;
 
 export {
   _captchaCheckStatusApi,
@@ -21,5 +22,6 @@ export {
   _permissionsApi,
   _modifyPasswordForceStatusApi,
   _modifyPasswordApi,
-  _userRolesApi
+  _userRolesApi,
+  _userMechanismApi
 };

@@ -5,9 +5,12 @@ import {
     _captchaImageResourcesApi,
     _loginApi,
     _logoutApi,
-    _menusApi, _modifyPasswordApi, _modifyPasswordForceStatusApi,
+    _menusApi,
+    _modifyPasswordApi,
+    _modifyPasswordForceStatusApi,
     _permissionsApi,
     _userInformationApi,
+    _userMechanismApi,
     _userRolesApi
 } from './url';
 
@@ -160,6 +163,17 @@ const c2_sysx_getUserRoles = id => {
     });
 };
 
+/**
+ * 获取用户机构
+ * @param id 用户id
+ * @param mechanism 用户机构标识
+ */
+const c2_sysx_getUserMechanism = ({ id, mechanism }) => {
+    return request({
+        url: _proxyPrefix + _userMechanismApi(id, mechanism)
+    });
+};
+
 export {
     c2_sysx_setConfig,
     c2_sysx_getCaptchaCheckStatus,
@@ -172,5 +186,6 @@ export {
     c2_sysx_getAvatar,
     c2_sysx_getMenus,
     c2_sysx_getPermissions,
-    c2_sysx_getUserRoles
+    c2_sysx_getUserRoles,
+    c2_sysx_getUserMechanism
 };
