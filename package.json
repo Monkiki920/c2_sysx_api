@@ -1,12 +1,12 @@
 {
   "name": "c2-sysx-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "系统管理X接口",
   "main": "index.js",
   "author": "vic",
   "license": "ISC",
   "dependencies": {
+    "crypto-js": "^4.2.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

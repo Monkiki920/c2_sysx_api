@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js';
 import request from './request';
 import {
     _avatarApi,
@@ -72,11 +73,12 @@ const c2_sysx_login = ({account, password, captchaText = '', captchaKey} = {}) =
         url: _proxyPrefix + _loginApi,
         method: 'post',
         data: {
-            account,
-            password,
+            isencrypt: true,
+            account: encrypt(_clientId, account),
+            password: encrypt(_clientId, password),
             clientId,
             captchaKey,
-            captchaText
+            captchaText: encrypt(_clientId, captchaText),
         }
     });
 };
@@ -168,10 +170,30 @@ const c2_sysx_getUserRoles = id => {
  * @param id 用户id
  * @param mechanism 用户机构标识
  */
-const c2_sysx_getUserMechanism = ({ id, mechanism }) => {
+const c2_sysx_getUserMechanism = ({id, mechanism}) => {
     return request({
         url: _proxyPrefix + _userMechanismApi(id, mechanism)
     });
+};
+
+/**
+ * 加密算法
+ * @param clientId 客户端id
+ * @param val 加密内容
+ */
+const encrypt = (clientId, val) => {
+    if (clientId === null) {
+        clientId = '0';
+    }
+    if (clientId.length > 16) {
+        clientId = clientId.substring(0, 16);
+    }
+    clientId = clientId.padEnd(16, '0');
+    const key = CryptoJS.enc.Utf8.parse(clientId); // 十六位十六进制数作为密钥
+    const iv = CryptoJS.enc.Utf8.parse(clientId);
+    const srcs = CryptoJS.enc.Utf8.parse(val);
+    const encrypted = CryptoJS.AES.encrypt(srcs, key, {iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});
+    return encrypted.toString();
 };
 
 export {
